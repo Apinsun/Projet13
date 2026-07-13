@@ -217,5 +217,18 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# ── Node / Angular (secours si pas dans frontend/) ──
+node_modules/
+dist/
+.angular/
+*.log
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Docker ──
+docker-compose.override.yml
+
 #Perso
 Docs
