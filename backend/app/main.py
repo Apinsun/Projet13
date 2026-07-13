@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.healthcheck import router as healthcheck_router
+from app.api.moves import router as moves_router
+from app.api.evaluate import router as evaluate_router
 
 app = FastAPI(
     title="Chess Agent API",
@@ -18,6 +20,8 @@ app.add_middleware(
 )
 
 app.include_router(healthcheck_router, prefix="/api/v1")
+app.include_router(moves_router, prefix="/api/v1")
+app.include_router(evaluate_router, prefix="/api/v1")
 
 
 @app.get("/")

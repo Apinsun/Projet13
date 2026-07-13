@@ -60,7 +60,7 @@ curl http://localhost:8000/api/v1/healthcheck   # → {"status":"ok"}
 ## Étapes de développement
 
 1. ✅ Environnement de développement (Poetry, Angular, Docker Compose)
-2. ⬜ Endpoints Lichess (`/moves/{fen}`) et Stockfish (`/evaluate/{fen}`)
+2. ✅ Endpoints Lichess (`/moves/{fen}`) et Stockfish (`/evaluate/{fen}`)
 3. ⬜ Intégration Milvus + RAG (Wikichess → embeddings → `/vector-search`)
 4. ⬜ Intégration YouTube API (`/videos/{opening}`)
 5. ⬜ Interface Angular (échiquier interactif + panneau recommandations)

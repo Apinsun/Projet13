@@ -1,3 +1,4 @@
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings
 
 
@@ -9,7 +10,8 @@ class Settings(BaseSettings):
     api_port: int = 8000
 
     # Lichess
-    lichess_api_url: str = "https://explorer.lichess.ovh"
+    lichess_api_url: str = "https://explorer.lichess.org"
+    lichess_api_token: SecretStr = SecretStr("")
 
     # YouTube
     youtube_api_key: str = ""
