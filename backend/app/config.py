@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     mongo_uri: str = "mongodb://mongo:27017"
     mongo_db_name: str = "chess_agent"
 
+    # Mistral AI (LLM pour formuler les réponses)
+    mistral_api_key: str = ""
+    mistral_model: str = "mistral-small"
+
     # Stockfish
     stockfish_path: str = "/usr/games/stockfish"
 
