@@ -1,0 +1,23 @@
+# Ruy Lopez (Espagnole)
+
+La Ruy Lopez, également appelée Partie espagnole, est une ouverture qui commence par 1.e4 e5 2.Cf3 Cc6 3.Fb5. C'est l'une des ouvertures les plus jouées et respectées à tous les niveaux.
+
+## Histoire
+
+Nommée d'après le prêtre espagnol Ruy López de Segura qui l'a analysée en 1561, cette ouverture est restée pertinente jusqu'à aujourd'hui. Tous les champions du monde l'ont pratiquée.
+
+## Caractéristiques stratégiques
+
+Les Blancs exercent une pression indirecte sur le centre en menaçant le cavalier c6 qui défend le pion e5. L'ouverture mène à des positions riches en plans stratégiques.
+
+## Principales variantes
+
+- Défense Morphy (3...a6) : la réponse la plus populaire
+- Variante d'échange (4.Fxc6) : simplifie la position
+- Variante fermée (4.Fa4 Cf6 5.O-O Fe7) : la ligne principale
+- Variante ouverte (4.Fa4 Cf6 5.O-O Cxe4) : contre-attaque immédiate des Noirs
+- Défense Berlin (3...Cf6) : variante solide rendue célèbre par Kramnik
+
+## Pièges classiques
+
+Piège de l'Arche de Noé : 1.e4 e5 2.Cf3 Cc6 3.Fb5 a6 4.Fa4 d6 5.d4 b5 6.Fb3 Cxd4? 7.Cxd4 exd4 8.Fd5! gagnant une tour

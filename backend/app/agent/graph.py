@@ -3,7 +3,7 @@ Graphe LangGraph pour l'agent échecs.
 
 Flow :
     START → validate_fen → fetch_lichess → decide_path
-                                               ├── théorique → format_response
+                                               ├── théorique → fetch_milvus → format_response
                                                └── non-théorique → fetch_stockfish → format_response
 """
 
@@ -16,6 +16,7 @@ from app.config import settings
 from app.services.lichess_service import get_opening_moves, LichessApiError
 from app.services.stockfish_service import evaluate_position, StockfishError
 from app.services.fen_validator import validate_fen, InvalidFenError
+from app.services.milvus_service import search_openings
 
 
 # ── Nœuds du graphe ──────────────────────────────
@@ -63,6 +64,28 @@ def fetch_stockfish_node(state: AgentState) -> AgentState:
     return state
 
 
+def fetch_milvus_node(state: AgentState) -> AgentState:
+    """Recherche le contexte WikiChess dans Milvus."""
+    if state.get("error"):
+        return state
+
+    opening = state.get("lichess_opening")
+    if not opening or not opening.get("name"):
+        state["rag_context"] = None
+        return state
+
+    try:
+        results = search_openings(opening["name"], top_k=1)
+        if results:
+            state["rag_context"] = "\n\n".join(r["text"] for r in results)
+        else:
+            state["rag_context"] = None
+    except Exception:
+        # Milvus indisponible → on continue sans contexte
+        state["rag_context"] = None
+    return state
+
+
 def format_response_node(state: AgentState) -> AgentState:
     """Formule une réponse en langage naturel via le LLM (Mistral)."""
     if state.get("error"):
@@ -98,11 +121,11 @@ def format_response_node(state: AgentState) -> AgentState:
 
 
 def decide_path(state: AgentState) -> str:
-    """Aiguillage : position théorique → format, sinon → Stockfish."""
+    """Aiguillage : position théorique → RAG, sinon → Stockfish."""
     if state.get("error"):
         return "format_response"
     if state.get("is_theoretical"):
-        return "format_response"
+        return "fetch_milvus"
     return "fetch_stockfish"
 
 
@@ -129,12 +152,20 @@ Ouverture identifiée : {opening_text}
 Coups théoriques les plus joués :
 {moves_text}
 
+📚 Contexte encyclopédique :
+{state.get('rag_context') or 'Aucune information complémentaire trouvée.'}
+
+⚠️ Le contexte ci-dessus est fourni par une recherche automatique et peut concerner
+une ouverture voisine mais différente. Vérifie sa pertinence avant de l'utiliser :
+si le titre ou le contenu ne correspond PAS à l'ouverture identifiée, IGNORE-LE
+complètement et base-toi uniquement sur les coups théoriques.
+
 Explique de façon pédagogique ce que cette ouverture signifie pour un jeune joueur :
 - Quel est le plan stratégique ?
 - Quel coup est le plus populaire et pourquoi ?
 - Y a-t-il un piège classique à connaître ?
 
-Réponds en 3-4 phrases maximum, de façon encourageante."""
+Utilise le contexte encyclopédique pour enrichir ta réponse. Réponds en 4-5 phrases maximum, de façon encourageante."""
 
 
 def _build_engine_prompt(state: AgentState) -> str:
@@ -177,6 +208,7 @@ def create_graph() -> StateGraph:
     graph.add_node("validate_fen", validate_fen_node)
     graph.add_node("fetch_lichess", fetch_lichess_node)
     graph.add_node("fetch_stockfish", fetch_stockfish_node)
+    graph.add_node("fetch_milvus", fetch_milvus_node)
     graph.add_node("format_response", format_response_node)
 
     # Arêtes
@@ -186,10 +218,12 @@ def create_graph() -> StateGraph:
         "fetch_lichess",
         decide_path,
         {
-            "format_response": "format_response",
+            "fetch_milvus": "fetch_milvus",
             "fetch_stockfish": "fetch_stockfish",
+            "format_response": "format_response",
         },
     )
+    graph.add_edge("fetch_milvus", "format_response")
     graph.add_edge("fetch_stockfish", "format_response")
     graph.add_edge("format_response", END)
 

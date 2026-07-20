@@ -1,0 +1,22 @@
+# Défense Caro-Kann
+
+La Défense Caro-Kann est une ouverture solide qui débute par 1.e4 c6. Elle est appréciée pour sa fiabilité et sa structure de pions favorable aux Noirs.
+
+## Histoire
+
+Nommée d'après Horatio Caro et Marcus Kann qui l'ont analysée à la fin du XIXe siècle, cette défense a été l'arme favorite de champions comme Capablanca, Botvinnik et Karpov.
+
+## Caractéristiques stratégiques
+
+Contrairement à la Française, la Caro-Kann ne bloque pas le fou c8. Les Noirs obtiennent généralement une position solide sans faiblesse structurelle majeure. L'ouverture est considérée comme l'une des réponses les plus fiables à 1.e4.
+
+## Principales variantes
+
+- Variante classique (1.e4 c6 2.d4 d5 3.Cc3 dxe4 4.Cxe4) : la ligne principale
+- Variante d'avance (2.d4 d5 3.e5) : les Blancs ferment le centre
+- Variante Panov-Botvinnik (3.exd5 cxd5 4.c4) : ouverture du centre
+- Variante Tartakover (3.Cc3 dxe4 4.Cxe4 Cf6 5.Cxf6+ exf6) : doublement des pions noirs
+
+## Pièges classiques
+
+Piège de la Caro-Kann : 1.e4 c6 2.d4 d5 3.Cc3 dxe4 4.Cxe4 Cd7 5.De2 Cgf6?? 6.Cd6#

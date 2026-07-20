@@ -1,0 +1,21 @@
+# Défense Scandinave
+
+La Défense scandinave (ou Défense du centre) commence par 1.e4 d5. Elle est l'une des plus anciennes ouvertures connues.
+
+## Histoire
+
+Analysée dès le XVIe siècle, la Scandinave a longtemps été considérée comme douteuse car les Noirs perdent du temps avec leur dame. Cependant, des grands maîtres modernes comme Tiviakov l'ont réhabilitée.
+
+## Caractéristiques stratégiques
+
+Les Noirs contestent immédiatement le centre en échangeant le pion e4. La Scandinave mène à des positions asymétriques où les Noirs ont peu de faiblesses mais un léger retard de développement.
+
+## Principales variantes
+
+- Scandinave classique (2.exd5 Dxd5 3.Cc3) : la ligne principale, les Noirs doivent déplacer leur dame
+- Scandinave moderne (2.exd5 Cf6) : gambit où les Noirs sacrifient un pion pour le développement
+- Scandinave avec c6 (2.exd5 Cf6 3.d4 c6) : gambit islandais
+
+## Pièges classiques
+
+Piège de la Scandinave : 1.e4 d5 2.exd5 Dxd5 3.Cc3 Da5 4.d4 e5? 5.dxe5 Dxe5+ 6.Fe3 et les Blancs gagnent plusieurs tempi sur la dame noire

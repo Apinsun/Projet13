@@ -33,6 +33,7 @@ async def get_advice(fen: str):
         "stockfish_score": None,
         "stockfish_mate": None,
         "stockfish_best_move": None,
+        "rag_context": None,
         "is_theoretical": False,
         "response": "",
         "error": None,

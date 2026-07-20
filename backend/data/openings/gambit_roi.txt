@@ -1,0 +1,22 @@
+# Gambit du Roi
+
+Le Gambit du Roi est une ouverture tranchante qui commence par 1.e4 e5 2.f4. Les Blancs sacrifient un pion pour obtenir une attaque rapide.
+
+## Histoire
+
+Ouverture favorite des joueurs d'attaque du XIXe siècle, le Gambit du Roi a été joué par tous les grands champions romantiques. Il a perdu en popularité au XXe siècle avec l'amélioration des techniques défensives, mais reste une arme surprise redoutable.
+
+## Caractéristiques stratégiques
+
+Les Blancs sacrifient le pion f pour ouvrir la colonne f et obtenir un avantage de développement et d'attaque. L'ouverture mène à des positions tactiques et souvent violentes où la connaissance théorique est cruciale.
+
+## Principales variantes
+
+- Gambit du Roi accepté (2...exf4) : prise du pion offert
+- Gambit du Roi refusé (2...Fc5 ou 2...d5) : les Noirs évitent la prise
+- Gambit du fou (3.Fc4) : développement rapide du fou
+- Gambit du cavalier (3.Cf3) : la variante la plus populaire
+
+## Pièges classiques
+
+Mat de Legal : 1.e4 e5 2.Cf3 Cc6 3.Fc4 d6 4.Cc3 Fg4 5.h3 Fh5? 6.Cxe5! Fxd1?? 7.Fxf7+ Re7 8.Cd5#

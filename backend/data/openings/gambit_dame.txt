@@ -1,0 +1,23 @@
+# Gambit Dame
+
+Le Gambit Dame est une ouverture du pion dame qui commence par 1.d4 d5 2.c4. Malgré son nom, ce n'est pas un vrai gambit car les Noirs ne peuvent pas conserver le pion sans inconvénient.
+
+## Histoire
+
+Joué systématiquement depuis le XIXe siècle, le Gambit Dame a dominé la pratique échiquéenne du XXe siècle. Il est resté l'ouverture la plus jouée en compétition de haut niveau.
+
+## Caractéristiques stratégiques
+
+Les Blancs proposent d'échanger leur pion c contre le pion central d5 des Noirs pour obtenir un avantage d'espace et de développement. L'ouverture mène à des positions riches en plans stratégiques variés.
+
+## Principales variantes
+
+- Gambit Dame accepté (2...dxc4) : les Noirs prennent le pion temporairement
+- Gambit Dame refusé (2...e6) : la réponse la plus solide
+- Défense slave (2...c6) : protège le pion tout en libérant le fou
+- Défense semi-slave (2...e6 3.Cc3 c6) : combine les idées de la Slave et du Gambit refusé
+- Défense orthodoxe : variante classique du Gambit refusé
+
+## Pièges classiques
+
+Piège de l'éléphant : 1.d4 d5 2.c4 e6 3.Cc3 Cf6 4.Fg5 Cbd7 5.cxd5 exd5 6.Cxd5?? Cxd5! 7.Fxd8 Fb4+ et les Noirs regagnent la dame

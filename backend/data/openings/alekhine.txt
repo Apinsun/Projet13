@@ -1,0 +1,21 @@
+# Défense Alekhine
+
+La Défense Alekhine est une ouverture provocatrice qui commence par 1.e4 Cf6. Elle porte le nom du champion du monde Alexandre Alekhine.
+
+## Histoire
+
+Introduite par Alekhine dans les années 1920, cette défense hypermoderne a choqué le monde des échecs en semblant violer le principe de ne pas déplacer deux fois une pièce dans l'ouverture.
+
+## Caractéristiques stratégiques
+
+Les Noirs invitent les Blancs à avancer leurs pions centraux pour ensuite les contre-attaquer. L'idée est de transformer l'avantage d'espace des Blancs en cibles d'attaque. Cette stratégie "provocation et contre-attaque" est caractéristique de l'école hypermoderne.
+
+## Principales variantes
+
+- Variante des 4 pions (2.e5 Cd5 3.d4 d6 4.c4 Cb6 5.f4) : occupation massive du centre
+- Variante moderne (2.e5 Cd5 3.d4 d6 4.Cf3) : développement flexible
+- Variante d'échange (2.e5 Cd5 3.d4 d6 4.c4 Cb6 5.exd6) : simplification
+
+## Pièges classiques
+
+Piège de l'Alekhine : 1.e4 Cf6 2.e5 Cd5 3.c4 Cb6 4.d4 d6 5.f4 dxe5 6.fxe5 Cc6 7.Fe3 Ff5 8.Cc3 e6 9.Cf3 Fe7 et les Noirs ont une bonne position de contre-jeu

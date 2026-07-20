@@ -1,0 +1,22 @@
+# Défense Française
+
+La Défense française est une ouverture qui commence par 1.e4 e6. Elle est réputée pour sa solidité et fait partie du répertoire de nombreux grands maîtres.
+
+## Histoire
+
+Popularisée au XIXe siècle après un match par correspondance entre Paris et Londres, la Française a été adoptée par des champions comme Botvinnik, Petrossian et plus récemment Carlsen.
+
+## Caractéristiques stratégiques
+
+Les Noirs concèdent temporairement le centre pour construire une position solide. La structure de pions typique (pions noirs en e6 et d5) offre une forteresse défensive. Le principal inconvénient est le fou c8 souvent enfermé derrière les pions.
+
+## Principales variantes
+
+- Variante d'avance (2.e5) : les Blancs gagnent de l'espace
+- Variante Tarrasch (2.d4 d5 3.Cd2) : évite le clouage du cavalier
+- Variante classique (2.d4 d5 3.Cc3) : développement naturel
+- Variante Winawer (2.d4 d5 3.Cc3 Fb4) : contre-attaque immédiate
+
+## Pièges classiques
+
+Piège de la Française : 1.e4 e6 2.d4 d5 3.Cc3 Fb4 4.Fd3? dxe4 5.Fxe4? Cf6! gagnant le fou

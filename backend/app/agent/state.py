@@ -19,6 +19,9 @@ class AgentState(TypedDict):
     # Décision
     is_theoretical: bool
 
+    # Résultat RAG (Milvus / WikiChess)
+    rag_context: str | None
+
     # Résultat final
     response: str
     error: str | None

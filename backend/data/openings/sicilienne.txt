@@ -1,0 +1,23 @@
+# Défense Sicilienne
+
+La Défense sicilienne est une ouverture aux échecs qui s'obtient par les coups 1.e4 c5. Elle est l'une des ouvertures les plus populaires et les plus analysées de l'histoire des échecs.
+
+## Histoire
+
+La Sicilienne est connue depuis le XVIe siècle. Elle doit son nom à l'Italien Giulio Cesare Polerio qui l'aurait introduite. Ce n'est qu'au XXe siècle qu'elle est devenue l'arme principale contre 1.e4, notamment grâce aux travaux des champions du monde Bobby Fischer et Garry Kasparov.
+
+## Caractéristiques stratégiques
+
+Les Noirs ne répondent pas symétriquement à 1.e4 mais jouent un coup asymétrique, c5. Ce coup empêche les Blancs d'occuper le centre avec d4 sans échange de pions. La Sicilienne mène généralement à des positions dynamiques et déséquilibrées, offrant aux Noirs des chances de contre-jeu.
+
+## Principales variantes
+
+- Sicilienne ouverte (2.Cf3 suivi de 3.d4) : la ligne principale, les Blancs ouvrent le centre
+- Sicilienne fermée (2.Cc3) : les Blancs évitent l'échange central
+- Sicilienne Najdorf (2.Cf3 d6 3.d4 cxd4 4.Cxd4 Cf6 5.Cc3 a6) : la variante la plus populaire
+- Sicilienne Dragon (2.Cf3 d6 3.d4 cxd4 4.Cxd4 Cf6 5.Cc3 g6) : variante tranchante avec fianchetto noir
+- Sicilienne Scheveningen (2.Cf3 d6 3.d4 cxd4 4.Cxd4 Cf6 5.Cc3 e6) : structure solide et flexible
+
+## Pièges classiques
+
+Le piège de Barbarasco dans la Sicilienne : 1.e4 c5 2.Cf3 d6 3.d4 cxd4 4.Cxd4 Cf6 5.Cc3 Cc6 6.Fg5 e5? 7.Cf5! et les Noirs perdent du matériel si 7...Fxf5 8.exf5 avec fourchette sur d5

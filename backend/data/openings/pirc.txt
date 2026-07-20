@@ -1,0 +1,22 @@
+# Défense Pirc
+
+La Défense Pirc est une ouverture moderne qui commence par 1.e4 d6. Elle porte le nom du grand maître yougoslave Vasja Pirc.
+
+## Histoire
+
+Bien que connue depuis le début du XXe siècle, la Pirc a été popularisée dans les années 1960-70 par des joueurs comme Robert Byrne et plus tard par de nombreux praticiens de la défense moderne.
+
+## Caractéristiques stratégiques
+
+Les Noirs laissent les Blancs occuper le centre avec leurs pions pour ensuite le contre-attaquer à distance avec des pièces. La Pirc mène à des positions asymétriques et dynamiques, souvent avec un fianchetto roi pour les Noirs.
+
+## Principales variantes
+
+- Variante classique (1.e4 d6 2.d4 Cf6 3.Cc3 g6 4.Cf3) : développement standard
+- Attaque autrichienne (4.f4) : les Blancs poussent leurs pions centraux
+- Système 150 (4.Fe3) : préparation préventive des Blancs
+- Variante avec Fg5 (4.Fg5) : clouage du cavalier f6
+
+## Pièges classiques
+
+Piège de la Pirc : 1.e4 d6 2.d4 Cf6 3.Cc3 g6 4.Cf3 Fg7 5.Fe2 O-O 6.O-O Cbd7 7.e5!? dxe5? 8.dxe5 Cg4 9.e6! fxe6 10.Dxd8+ Txd8 11.Cg5 avec une fourchette mortelle

@@ -1,0 +1,22 @@
+# Partie Italienne (Giuoco Piano)
+
+La Partie italienne est une ouverture classique qui débute par 1.e4 e5 2.Cf3 Cc6 3.Fc4. Elle est l'une des plus anciennes ouvertures répertoriées.
+
+## Histoire
+
+Développée par les maîtres italiens des XVIe et XVIIe siècles, la Partie italienne a longtemps été l'ouverture standard contre 1...e5. Son nom Giuoco Piano signifie "jeu tranquille" en italien.
+
+## Caractéristiques stratégiques
+
+Les Blancs développent rapidement leur fou en c4, visant le pion f7 (point faible traditionnel des Noirs). L'ouverture est considérée comme solide et positionnelle, bien que des variantes tranchantes existent comme le Gambit Evans (4.b4).
+
+## Principales variantes
+
+- Giuoco Piano classique (3...Fc5) : développement symétrique
+- Défense des deux cavaliers (3...Cf6) : les Noirs contre-attaquent immédiatement
+- Gambit Evans (4.b4) : sacrifice de pion des Blancs pour ouvrir des lignes
+- Variante moderne (4.c3) : prépare d4
+
+## Pièges classiques
+
+Le mat du Berger : 1.e4 e5 2.Fc4 Cc6 3.Dh5?! Cf6?? 4.Dxf7#. Un piège de débutant qui ne fonctionne qu'à bas niveau mais bon à connaître pour l'éviter.
