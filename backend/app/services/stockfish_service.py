@@ -16,9 +16,8 @@ def _get_engine() -> Stockfish:
             "Hash": 64,
         },
     )
-    if not engine.is_running():
-        # Force le démarrage
-        engine.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    # Initialise l'engine avec la position de départ (démarre le processus)
+    engine.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     return engine
 
 

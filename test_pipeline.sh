@@ -67,7 +67,14 @@ test_endpoint "Recherche 'Sicilienne'" GET "$BASE/vector-search?q=Sicilienne&top
 test_endpoint "Recherche 'Gambit Dame'" GET "$BASE/vector-search?q=Gambit%20Dame" 200
 echo ""
 
-# ── 5. Advice (pipeline complet) ─────────────
+# ── 5. YouTube Videos ────────────────────────
+echo "🎥 YouTube Videos"
+test_endpoint "Recherche 'Sicilienne'" GET "$BASE/videos/Sicilienne?top_k=2" 200
+test_endpoint "Recherche 'Italienne'" GET "$BASE/videos/Italienne" 200
+test_endpoint "Recherche 'Gambit Dame'" GET "$BASE/videos/Gambit%20Dame" 200
+echo ""
+
+# ── 6. Advice (pipeline complet) ─────────────
 echo "🧠 Advice (LangGraph : Lichess + Milvus + Stockfish + Mistral)"
 test_endpoint "Conseil après 1.e4 (théorique + RAG)" GET "$BASE/advice/$FEN_E4" 200
 test_endpoint "Conseil position rois seuls (Stockfish)" GET "$BASE/advice/$FEN_RANDOM" 200

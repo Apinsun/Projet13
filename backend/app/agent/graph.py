@@ -3,7 +3,7 @@ Graphe LangGraph pour l'agent échecs.
 
 Flow :
     START → validate_fen → fetch_lichess → decide_path
-                                               ├── théorique → fetch_milvus → format_response
+                                               ├── théorique → fetch_milvus → fetch_youtube → format_response
                                                └── non-théorique → fetch_stockfish → format_response
 """
 
@@ -17,6 +17,7 @@ from app.services.lichess_service import get_opening_moves, LichessApiError
 from app.services.stockfish_service import evaluate_position, StockfishError
 from app.services.fen_validator import validate_fen, InvalidFenError
 from app.services.milvus_service import search_openings
+from app.services.youtube_service import search_videos
 
 
 # ── Nœuds du graphe ──────────────────────────────
@@ -86,6 +87,24 @@ def fetch_milvus_node(state: AgentState) -> AgentState:
     return state
 
 
+def fetch_youtube_node(state: AgentState) -> AgentState:
+    """Recherche des vidéos YouTube sur l'ouverture identifiée."""
+    if state.get("error"):
+        return state
+
+    opening = state.get("lichess_opening")
+    if not opening or not opening.get("name"):
+        state["youtube_videos"] = None
+        return state
+
+    try:
+        videos, source = search_videos(opening["name"])
+        state["youtube_videos"] = [v.model_dump() for v in videos]
+    except Exception:
+        state["youtube_videos"] = None
+    return state
+
+
 def format_response_node(state: AgentState) -> AgentState:
     """Formule une réponse en langage naturel via le LLM (Mistral)."""
     if state.get("error"):
@@ -121,7 +140,7 @@ def format_response_node(state: AgentState) -> AgentState:
 
 
 def decide_path(state: AgentState) -> str:
-    """Aiguillage : position théorique → RAG, sinon → Stockfish."""
+    """Aiguillage : position théorique → RAG + YouTube, sinon → Stockfish."""
     if state.get("error"):
         return "format_response"
     if state.get("is_theoretical"):
@@ -155,6 +174,9 @@ Coups théoriques les plus joués :
 📚 Contexte encyclopédique :
 {state.get('rag_context') or 'Aucune information complémentaire trouvée.'}
 
+🎥 Vidéos recommandées :
+{_format_youtube_for_prompt(state.get('youtube_videos'))}
+
 ⚠️ Le contexte ci-dessus est fourni par une recherche automatique et peut concerner
 une ouverture voisine mais différente. Vérifie sa pertinence avant de l'utiliser :
 si le titre ou le contenu ne correspond PAS à l'ouverture identifiée, IGNORE-LE
@@ -165,7 +187,9 @@ Explique de façon pédagogique ce que cette ouverture signifie pour un jeune jo
 - Quel coup est le plus populaire et pourquoi ?
 - Y a-t-il un piège classique à connaître ?
 
-Utilise le contexte encyclopédique pour enrichir ta réponse. Réponds en 4-5 phrases maximum, de façon encourageante."""
+Utilise le contexte encyclopédique pour enrichir ta réponse.
+Si des vidéos sont disponibles, recommande la plus pertinente en fin de réponse.
+Réponds en 4-5 phrases maximum, de façon encourageante."""
 
 
 def _build_engine_prompt(state: AgentState) -> str:
@@ -196,6 +220,17 @@ Explique au jeune joueur :
 Réponds en 3-4 phrases maximum, rassure le joueur et encourage-le à continuer."""
 
 
+def _format_youtube_for_prompt(videos: list[dict] | None) -> str:
+    """Formate les vidéos pour le prompt LLM."""
+    if not videos:
+        return "Aucune vidéo disponible."
+    lines = []
+    for v in videos[:3]:
+        duration = f" ({v.get('duration')})" if v.get('duration') else ""
+        lines.append(f"  • {v['title']}{duration} — {v['channel']}\n    {v['url']}")
+    return "\n".join(lines)
+
+
 # ── Construction du graphe ────────────────────────
 
 
@@ -204,11 +239,12 @@ def create_graph() -> StateGraph:
 
     graph = StateGraph(AgentState)
 
-    # Déclaration des nœuds (wrap async nodes for sync graph)
+    # Déclaration des nœuds
     graph.add_node("validate_fen", validate_fen_node)
     graph.add_node("fetch_lichess", fetch_lichess_node)
     graph.add_node("fetch_stockfish", fetch_stockfish_node)
     graph.add_node("fetch_milvus", fetch_milvus_node)
+    graph.add_node("fetch_youtube", fetch_youtube_node)
     graph.add_node("format_response", format_response_node)
 
     # Arêtes
@@ -223,7 +259,8 @@ def create_graph() -> StateGraph:
             "format_response": "format_response",
         },
     )
-    graph.add_edge("fetch_milvus", "format_response")
+    graph.add_edge("fetch_milvus", "fetch_youtube")
+    graph.add_edge("fetch_youtube", "format_response")
     graph.add_edge("fetch_stockfish", "format_response")
     graph.add_edge("format_response", END)
 

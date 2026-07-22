@@ -22,6 +22,9 @@ class AgentState(TypedDict):
     # Résultat RAG (Milvus / WikiChess)
     rag_context: str | None
 
+    # Résultat YouTube
+    youtube_videos: list[dict] | None
+
     # Résultat final
     response: str
     error: str | None

@@ -37,6 +37,24 @@ class EngineEvaluation(BaseModel):
     depth: int = Field(default=0, description="Profondeur de recherche")
 
 
+# ── YouTube / Videos ───────────────────────────
+
+class VideoResult(BaseModel):
+    """Une vidéo YouTube recommandée."""
+    title: str = Field(description="Titre de la vidéo")
+    url: str = Field(description="URL YouTube")
+    channel: str = Field(description="Nom de la chaîne")
+    duration: str | None = Field(default=None, description="Durée (ex: 12:34)")
+    views: str | None = Field(default=None, description="Nombre de vues formaté")
+
+
+class VideoResponse(BaseModel):
+    """Réponse de l'endpoint /videos/{opening}."""
+    opening: str = Field(description="Ouverture recherchée")
+    videos: list[VideoResult] = Field(default_factory=list)
+    source: str = Field(default="cache", description="Source: cache, api, fallback")
+
+
 # ── Erreurs ──────────────────────────────────────
 
 class ErrorResponse(BaseModel):

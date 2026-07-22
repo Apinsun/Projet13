@@ -6,6 +6,7 @@ from app.api.moves import router as moves_router
 from app.api.evaluate import router as evaluate_router
 from app.api.advice import router as advice_router
 from app.api.vector_search import router as vector_search_router
+from app.api.youtube import router as youtube_router
 
 app = FastAPI(
     title="Chess Agent API",
@@ -26,6 +27,7 @@ app.include_router(moves_router, prefix="/api/v1")
 app.include_router(evaluate_router, prefix="/api/v1")
 app.include_router(advice_router, prefix="/api/v1")
 app.include_router(vector_search_router, prefix="/api/v1")
+app.include_router(youtube_router, prefix="/api/v1")
 
 
 @app.get("/")
