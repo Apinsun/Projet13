@@ -76,8 +76,20 @@ echo ""
 
 # ── 6. Advice (pipeline complet) ─────────────
 echo "🧠 Advice (LangGraph : Lichess + Milvus + Stockfish + Mistral)"
-test_endpoint "Conseil après 1.e4 (théorique + RAG)" GET "$BASE/advice/$FEN_E4" 200
+test_endpoint "Conseil après 1.e4 (théorique + RAG + YouTube)" GET "$BASE/advice/$FEN_E4" 200
 test_endpoint "Conseil position rois seuls (Stockfish)" GET "$BASE/advice/$FEN_RANDOM" 200
+
+# Vérification que l'advice contient une recommandation vidéo YouTube
+printf "  %-55s " "Contient une vidéo YouTube dans le conseil"
+advice=$(curl -s "$BASE/advice/$FEN_E4")
+if echo "$advice" | grep -qE "youtube\.com|youtu\.be"; then
+    green "✅ Vidéo trouvée"
+    PASS=$((PASS + 1))
+else
+    red "❌ Aucune vidéo trouvée"
+    echo "    $(echo "$advice" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("advice","")[-300:])' 2>/dev/null)"
+    FAIL=$((FAIL + 1))
+fi
 echo ""
 
 # ── Résumé ───────────────────────────────────

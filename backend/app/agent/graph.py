@@ -188,7 +188,7 @@ Explique de façon pédagogique ce que cette ouverture signifie pour un jeune jo
 - Y a-t-il un piège classique à connaître ?
 
 Utilise le contexte encyclopédique pour enrichir ta réponse.
-Si des vidéos sont disponibles, recommande la plus pertinente en fin de réponse.
+Si des vidéos sont disponibles, recommande la plus pertinente en fin de réponse. Inclus OBLIGATOIREMENT le lien URL complet de la vidéo (format: https://www.youtube.com/watch?v=...).
 Réponds en 4-5 phrases maximum, de façon encourageante."""
 
 
