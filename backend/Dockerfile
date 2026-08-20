@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Poetry
 RUN pip install --no-cache-dir poetry==2.2.1
 
+# pymongo (couche légère, évite de dépendre du lourd poetry install)
+RUN pip install --no-cache-dir pymongo
+
 # Copy dependency files
 COPY pyproject.toml poetry.lock* ./
 

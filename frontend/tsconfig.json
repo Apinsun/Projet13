@@ -12,7 +12,16 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "baseUrl": "./",
+    "paths": {
+      "ngx-chess-board": [
+        "projects/ngx-chess-board/src/public-api.ts"
+      ],
+      "ngx-chess-board/*": [
+        "projects/ngx-chess-board/src/public-api/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

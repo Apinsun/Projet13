@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* Thème sombre style VSCode */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Segoe UI', 'Ubuntu', -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+a {
+  color: #4ec9b0;
+}
+
+strong {
+  color: #e0e0e0;
+}

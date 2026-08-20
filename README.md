@@ -1,109 +1,104 @@
-# Chess Agent — FFE
+# ♟️ Chess Agent FFE
 
-Agent IA pour l'apprentissage des ouvertures d'échecs, développé pour la Fédération Française des Échecs (FFE).
+Agent IA pour l'apprentissage des **ouvertures d'échecs**, développé pour la **Fédération Française des Échecs (FFE)** dans le cadre d'un POC (proof of concept).
 
-> **Contexte :** POC livré en 2 semaines — voir [`Docs/transcription_projet.md`](Docs/transcription_projet.md) pour le brief complet.
+> **Contexte** : projet OpenClassrooms — voir [`Docs/transcription_projet.md`](Docs/transcription_projet.md) pour le brief complet.
 
-## Structure du projet
+---
+
+## ✨ Ce que fait l'application
+
+Le joueur déplace les pièces sur un échiquier interactif. L'agent IA analyse la position et fournit :
+
+- 📖 **Le nom de l'ouverture** (via l'API Lichess)
+- 💡 **Les coups théoriques** les plus joués par les maîtres
+- 📚 **Le contexte encyclopédique** de l'ouverture (RAG via Milvus)
+- ⚙️ **L'évaluation Stockfish** si la position sort de la théorie
+- 🎥 **Des vidéos YouTube** pour approfondir
+- 🧠 **Un conseil pédagogique** formulé par Mistral AI
+
+---
+
+## 🏗️ Architecture
 
 ```
-Projet13/
-├── backend/                          # Python 3.12 / Poetry
-│   ├── pyproject.toml                # Dépendances
-│   ├── poetry.lock
-│   ├── Dockerfile                    # Python 3.12-slim + Stockfish
-│   ├── .env                          # Variables d'environnement
-│   └── app/
-│       ├── main.py                   # FastAPI + CORS
-│       ├── config.py                 # Settings Pydantic
-│       ├── models/chess.py           # Modèles Pydantic
-│       ├── api/
-│       │   ├── healthcheck.py        # GET /api/v1/healthcheck
-│       │   ├── moves.py              # GET /api/v1/moves/{fen}
-│       │   ├── evaluate.py           # GET /api/v1/evaluate/{fen}
-│       │   ├── vector_search.py      # GET /api/v1/vector-search
-│       │   ├── youtube.py            # GET /api/v1/videos/{opening}
-│       │   └── advice.py             # GET /api/v1/advice/{fen}
-│       ├── agent/
-│       │   ├── state.py              # AgentState TypedDict
-│       │   └── graph.py              # Graphe LangGraph (6 nœuds)
-│       └── services/
-│           ├── fen_validator.py      # Validation FEN (python-chess)
-│           ├── lichess_service.py    # Client Lichess Explorer API
-│           ├── stockfish_service.py  # Wrapper Stockfish UCI
-│           ├── milvus_service.py     # Recherche vectorielle Milvus
-│           └── youtube_service.py    # Recherche YouTube + cache MongoDB
-│
-├── frontend/                         # Angular 19
-│   ├── package.json                  # ngx-chess-board, @angular/cdk, etc.
-│   ├── Dockerfile                    # Multi-stage : build → nginx
-│   ├── nginx.conf
-│   └── src/app/
-│
-├── docker-compose.yml                # 6 services
-├── .env                              # Variables partagées
-├── start.sh                          # Démarrage Docker Compose
-├── test_pipeline.sh                  # 13 tests automatisés
-└── Docs/
-    ├── transcription_projet.md       # Brief complet OpenClassrooms
-    ├── STATUS.md                     # État d'avancement
-    ├── langgraph_explanation.md
-    ├── milvus_explanation.md
-    └── ...
+┌─────────────────────────────────────────────────────┐
+│                Frontend Angular 19                    │
+│         (ngx-chess-board + thème sombre)              │
+└──────────────────────┬───────────────────────────────┘
+                       │ HTTP /api/
+┌──────────────────────▼───────────────────────────────┐
+│                 Backend FastAPI                        │
+│                                                       │
+│  Graphe LangGraph :                                    │
+│  validate → lichess → [milvus + youtube] ou [stockfish]│
+│                    → format (Mistral)                  │
+└───┬──────────┬───────────┬───────────┬────────────────┘
+    │          │           │           │
+┌───▼───┐ ┌────▼────┐ ┌────▼────┐ ┌────▼────┐
+│Lichess│ │ Milvus  │ │ MongoDB │ │Stockfish│
+│  API  │ │  (RAG)  │ │ (cache) │ │ (moteur)│
+└───────┘ └─────────┘ └─────────┘ └─────────┘
 ```
 
-## Services Docker Compose
+---
 
-| Service | Image | Port | Rôle |
-|---|---|---|---|
-| **backend** | `Dockerfile` | `8000` | API FastAPI + LangGraph |
-| **frontend** | `Dockerfile` | `4200` | App Angular servie par nginx |
-| **mongo** | `mongo:7` | `27017` | Cache YouTube (TTL 24h) |
-| **milvus-standalone** | `milvusdb/milvus:v2.4.17` | `19530` | Base vectorielle (RAG) |
-| **etcd** | `quay.io/coreos/etcd:v3.5.5` | — | Metadata store Milvus |
-| **minio** | `minio/minio` | `9000` | Stockage objet Milvus |
+## 🚀 Démarrage rapide (un clic)
 
-## Démarrage rapide
+### Prérequis
+
+- **Docker** + Docker Compose v2
+- Trois clés API (gratuites) :
+  | Clé | Où l'obtenir | Optionnelle ? |
+  |-----|-------------|---------------|
+  | `LICHESS_API_TOKEN` | https://lichess.org/account/oauth/token | ❌ Requise |
+  | `MISTRAL_API_KEY` | https://console.mistral.ai/api-keys/ | ❌ Requise |
+  | `YOUTUBE_API_KEY` | https://console.cloud.google.com/apis/credentials | ✅ (fallback sinon) |
+
+### Lancement
 
 ```bash
-# 1. Renseigner les clés API dans backend/.env
-LICHESS_API_TOKEN=lip_...     # https://lichess.org/account/oauth/token
-MISTRAL_API_KEY=...           # API Mistral
-YOUTUBE_API_KEY=...           # Optionnel — fallback intégré sinon
+# 1. Configurer les clés
+cp .env.example .env
+# → éditer .env avec vos clés
 
-# 2. Lancer tous les services
-bash start.sh
-
-# 3. Tester
-./test_pipeline.sh
-
-# 4. Swagger
-open http://localhost:8000/docs
+# 2. Lancer tout
+./start.sh
 ```
 
-## Étapes de développement
+C'est tout ! L'application est disponible sur :
 
-1. ✅ Environnement (Poetry, Angular, Docker Compose)
-2. ✅ Agent LangGraph + Lichess + Stockfish + Mistral
-3. ✅ Milvus RAG (10 articles, search + intégration graphe)
-4. ✅ YouTube API + cache MongoDB + fallback curated
-5. ⬜ Interface Angular (échiquier interactif + panneau recommandations)
-6. ⬜ Packaging final (docker-compose complet, README, démo)
-7. ⬜ Étude de faisabilité système d'analyse vidéo (document 8-10 pages, MCP)
-8. ⬜ Autoévaluation et mentorat
+| Accès | URL |
+|-------|-----|
+| 🖥️ **Frontend** | http://localhost:4200 |
+| 🔌 **API** | http://localhost:8000 |
+| 📚 **Swagger** | http://localhost:8000/docs |
 
-## Graphe LangGraph
+### Tester
 
-```
-START → validate_fen → fetch_lichess → decide_path
-                                          ├── théorique → fetch_milvus → fetch_youtube → format_response → Mistral
-                                          └── non-théorique → fetch_stockfish → format_response → Mistral
+```bash
+./test_pipeline.sh    # 14 tests automatisés
 ```
 
-## Endpoints API
+### Arrêter
+
+```bash
+docker compose down           # garde les données (volumes)
+docker compose down -v        # purge tout
+```
+
+---
+
+## 🎬 Démo
+
+Des scénarios prêts à l'emploi pour tester manuellement : voir **[`Docs/demo.md`](Docs/demo.md)**.
+
+---
+
+## 🔌 Endpoints API
 
 | Méthode | Route | Description |
-|---|---|---|
+|---------|-------|-------------|
 | `GET` | `/api/v1/healthcheck` | Santé du service |
 | `GET` | `/api/v1/moves/{fen}` | Coups théoriques (Lichess) |
 | `GET` | `/api/v1/evaluate/{fen}` | Évaluation Stockfish |
@@ -111,9 +106,80 @@ START → validate_fen → fetch_lichess → decide_path
 | `GET` | `/api/v1/videos/{opening}` | Vidéos YouTube (cache → API → fallback) |
 | `GET` | `/api/v1/advice/{fen}` | Conseil complet (pipeline LangGraph) |
 
-## Corrections récentes
+---
 
-- **Frontend** : Downgrade Angular 22 → 19 pour compatibilité `ngx-chess-board` + `@angular/cdk`
-- **Stockfish** : Suppression de `is_running()` (méthode supprimée de la lib stockfish v5)
-- **YouTube** : Tous les imports `pymongo` sont lazy (pas d'échec au démarrage sans la dépendance)
-- **MongoDB** : Correction timezone offset-aware vs offset-naive dans le cache YouTube
+## 🐳 Services Docker
+
+| Service | Image | Port | Rôle |
+|---------|-------|------|------|
+| **backend** | `Dockerfile` | `8000` | API FastAPI + LangGraph |
+| **frontend** | `Dockerfile` | `4200` | Angular 19 + nginx |
+| **mongo** | `mongo:7` | `27017` | Cache YouTube (TTL 24h) |
+| **milvus-standalone** | `milvusdb/milvus:v2.4.17` | `19530` | Base vectorielle (RAG) |
+| **etcd** | `quay.io/coreos/etcd` | — | Metadata store Milvus |
+| **minio** | `minio/minio` | `9000` | Stockage objet Milvus |
+
+---
+
+## 📁 Structure du projet
+
+```
+Projet13/
+├── backend/                    # Python 3.12 / Poetry
+│   ├── app/
+│   │   ├── api/                # 6 routes FastAPI
+│   │   ├── agent/              # Graphe LangGraph (state + graph)
+│   │   ├── services/           # lichess, stockfish, milvus, youtube, fen
+│   │   ├── models/             # Modèles Pydantic
+│   │   └── config.py           # Settings
+│   ├── data/openings/          # 10 articles d'ouvertures (Wikichess)
+│   ├── scripts/                # Ingestion Milvus
+│   └── Dockerfile
+├── frontend/                   # Angular 19
+│   ├── src/app/
+│   │   ├── components/         # chessboard + recommendations
+│   │   ├── services/           # API + state (signals)
+│   │   └── models/             # Types TS
+│   ├── projects/ngx-chess-board/  # Librairie locale (source OpenClassrooms)
+│   └── Dockerfile              # Multi-stage → nginx
+├── docker-compose.yml          # 6 services
+├── start.sh                    # 🚀 Lancement un clic
+├── test_pipeline.sh            # 14 tests automatisés
+├── .env.example                # Template de configuration
+└── Docs/
+    ├── demo.md                 # Scénarios de démonstration
+    ├── transcription_projet.md # Brief OpenClassrooms
+    └── STATUS.md               # État d'avancement
+```
+
+---
+
+## 🔧 Dépannage
+
+| Symptôme | Cause probable | Solution |
+|----------|----------------|----------|
+| `502 Bad Gateway` sur `/api/` | Backend pas encore prêt | Attendre quelques secondes, relancer |
+| `Erreur Stockfish: ...` | Binaire Stockfish absent | `docker compose build backend` |
+| Timeout sur `/vector-search` | Milvus en cours de démarrage | Attendre ~90s puis réessayer |
+| Vidéos en `"source": "fallback"` | `YOUTUBE_API_KEY` absente | Ajouter la clé dans `.env` |
+| `Temporary failure in name resolution` | DNS Docker instable | `docker compose restart backend` |
+
+---
+
+## 🧪 État du projet
+
+| Étape | Statut |
+|-------|--------|
+| 1. Environnement | ✅ |
+| 2. Agent LangGraph | ✅ |
+| 3. Milvus RAG | ✅ |
+| 4. YouTube API | ✅ |
+| 5. Frontend Angular | ✅ |
+| 6. Packaging | ✅ |
+| 7. Étude de faisabilité vidéo | ⬜ |
+
+---
+
+## 📄 Licence
+
+Projet pédagogique — OpenClassrooms / FFE.

@@ -17,7 +17,8 @@
     "@angular/forms": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/router": "^19.0.0",
-    "ngx-chess-board": "^3.0.0",
+    "@types/lodash": "^4.17.25",
+    "lodash": "^4.18.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
