@@ -11,6 +11,21 @@ CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+open_browser() {
+    local url="$1"
+    case "$(uname -s)" in
+        Linux*)
+            (xdg-open "$url" || sensible-browser "$url") > /dev/null 2>&1 &
+            ;;
+        Darwin*)
+            open "$url" > /dev/null 2>&1 &
+            ;;
+        CYGWIN*|MINGW*|MSYS*)
+            start "$url" > /dev/null 2>&1 &
+            ;;
+    esac
+}
+
 banner() {
     echo -e "${CYAN}═══════════════════════════════════════════${NC}"
     echo -e "${CYAN}  ♟️  Chess Agent FFE — Démarrage${NC}"
@@ -105,5 +120,11 @@ echo "  📚 Swagger   : http://localhost:${API_PORT:-8000}/docs"
 echo ""
 echo "  🧪 Tester    : ./test_pipeline.sh"
 echo "  🎬 Démo      : voir Docs/demo.md"
-echo "  ⏹️  Arrêter   : docker compose down"
+echo "  ⏹️  Arrêter   : ./stop.sh"
 echo -e "${CYAN}═══════════════════════════════════════════${NC}"
+
+# ── 6. Ouverture du navigateur ───────────────────
+echo ""
+echo "🌐 Ouverture du navigateur sur http://localhost:${FRONTEND_PORT:-4200} ..."
+sleep 3
+open_browser "http://localhost:${FRONTEND_PORT:-4200}"
