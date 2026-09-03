@@ -49,6 +49,25 @@ else
 fi
 echo ""
 
+# ── 3bis. Préchauffage du modèle d'embedding ────────
+echo -e "${CYAN}[3bis] Préchargement du modèle d'embedding (E5)...${NC}"
+echo "      (le premier appel charge le modèle, peut prendre 30-60s)"
+WARMED=false
+for i in $(seq 1 20); do
+    temps=$(curl -s -o /dev/null -w "%{time_total}" --max-time 90 "http://localhost:8000/api/v1/vector-search?q=warmup&top_k=1" 2>/dev/null)
+    if echo "$temps" | grep -qE '^[0-9]+(\.[0-9]+)?$' && [ "$(echo "$temps < 5" | bc -l 2>/dev/null)" = "1" ]; then
+        echo -e "      ${GREEN}OK modele charge (reponse en ${temps}s)${NC}"
+        WARMED=true
+        break
+    fi
+    echo "      chargement... (${i}/20)"
+    sleep 3
+done
+if [ "$WARMED" = false ]; then
+    echo -e "      ${YELLOW}ATTENTION: prechauffage non confirme, on continue quand meme${NC}"
+fi
+echo ""
+
 # ── 4. Tests ────────────────────────────────────────
 echo -e "${CYAN}[4/4] Lancement des tests...${NC}"
 echo ""
