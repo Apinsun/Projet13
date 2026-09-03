@@ -74,7 +74,6 @@ export class App implements OnInit {
         next: (res) => {
           this.state.advice.set(res);
           this.state.loading.set(false);
-          this.fetchVideos(res.opening?.name);
         },
         error: () => {
           this.state.error.set('Impossible de joindre le backend.');
@@ -90,16 +89,5 @@ export class App implements OnInit {
 
   onFenChanged(fen: string) {
     this.fenSubject.next(fen);
-  }
-
-  private fetchVideos(opening: string | null | undefined) {
-    if (!opening) {
-      this.state.videos.set(null);
-      return;
-    }
-    this.api.getVideos(opening).subscribe({
-      next: (v) => this.state.videos.set(v),
-      error: () => this.state.videos.set(null),
-    });
   }
 }

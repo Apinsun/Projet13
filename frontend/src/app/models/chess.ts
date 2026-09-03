@@ -23,6 +23,7 @@ export interface AdviceResponse {
   theoretical: boolean;
   moves: TheoreticalMove[];
   stockfish_evaluation: StockfishEvaluation | null;
+  videos: VideoResult[] | null;
   advice: string;
 }
 

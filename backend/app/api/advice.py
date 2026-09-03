@@ -34,6 +34,7 @@ async def get_advice(fen: str):
         "stockfish_mate": None,
         "stockfish_best_move": None,
         "rag_context": None,
+        "youtube_videos": None,
         "is_theoretical": False,
         "response": "",
         "error": None,
@@ -51,5 +52,6 @@ async def get_advice(fen: str):
             "mate_in": result.get("stockfish_mate"),
             "best_move": result.get("stockfish_best_move"),
         } if not result["is_theoretical"] else None,
+        "videos": result.get("youtube_videos"),
         "advice": result["response"],
     }

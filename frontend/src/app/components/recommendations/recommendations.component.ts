@@ -68,11 +68,11 @@ import { ChessStateService } from '../../services/chess-state.service';
         }
 
         <!-- Vidéos -->
-        @if (videos()?.videos?.length) {
+        @if (a.videos?.length) {
           <section>
             <h2>🎥 Vidéos</h2>
             <div class="videos">
-              @for (v of videos().videos; track v.url) {
+              @for (v of a.videos; track v.url) {
                 <a class="video" [href]="v.url" target="_blank" rel="noopener">
                   <span class="video-title">{{ v.title }}</span>
                   <span class="video-channel">{{ v.channel }}</span>
@@ -188,7 +188,6 @@ import { ChessStateService } from '../../services/chess-state.service';
 export class RecommendationsComponent {
   readonly state = inject(ChessStateService);
   readonly advice = this.state.advice;
-  readonly videos = this.state.videos;
 
   winRate(m: { white: number; black: number; draws: number }): string {
     const total = m.white + m.black + m.draws;
