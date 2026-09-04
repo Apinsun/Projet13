@@ -2,8 +2,6 @@
 
 Agent IA pour l'apprentissage des **ouvertures d'échecs**, développé pour la **Fédération Française des Échecs (FFE)** dans le cadre d'un POC (proof of concept).
 
-> **Contexte** : projet OpenClassrooms — voir [`Docs/transcription_projet.md`](Docs/transcription_projet.md) pour le brief complet.
-
 ---
 
 ## ✨ Ce que fait l'application
@@ -104,7 +102,9 @@ Des scénarios prêts à l'emploi pour tester manuellement : voir **[`Docs/demo.
 | `GET` | `/api/v1/evaluate/{fen}` | Évaluation Stockfish |
 | `GET` | `/api/v1/vector-search?q=...` | Recherche RAG (Milvus) |
 | `GET` | `/api/v1/videos/{opening}` | Vidéos YouTube (cache → API → fallback) |
-| `GET` | `/api/v1/advice/{fen}` | Conseil complet (pipeline LangGraph) |
+| `GET` | `/api/v1/advice/{fen}` | Conseil complet (pipeline LangGraph : moves + evaluation + **videos** + texte) |
+
+> **Note** : la réponse `/advice/{fen}` inclut directement le champ `videos` (structuré) — le frontend fait un seul appel pour tout le panneau de recommandations.
 
 ---
 
@@ -143,13 +143,12 @@ Projet13/
 │   ├── projects/ngx-chess-board/  # Librairie locale (source OpenClassrooms)
 │   └── Dockerfile              # Multi-stage → nginx
 ├── docker-compose.yml          # 6 services
-├── start.sh                    # 🚀 Lancement un clic
+├── start.sh                    # 🚀 Lancement un clic + ouvre le navigateur
+├── run_all.sh                  # 🔁 Build + lance + préchauffe + tests (validation complète)
 ├── test_pipeline.sh            # 14 tests automatisés
+├── stop.sh                     # ⏹️ Arrêt (stop.sh / stop.sh --purge)
 ├── .env.example                # Template de configuration
-└── Docs/
-    ├── demo.md                 # Scénarios de démonstration
-    ├── transcription_projet.md # Brief OpenClassrooms
-    └── STATUS.md               # État d'avancement
+└── Docs/                       # Brief, notes et documents du projet
 ```
 
 ---
@@ -160,7 +159,7 @@ Projet13/
 |----------|----------------|----------|
 | `502 Bad Gateway` sur `/api/` | Backend pas encore prêt | Attendre quelques secondes, relancer |
 | `Erreur Stockfish: ...` | Binaire Stockfish absent | `docker compose build backend` |
-| Timeout sur `/vector-search` | Milvus en cours de démarrage | Attendre ~90s puis réessayer |
+| Timeout sur `/vector-search` | Milvus en cours de démarrage / 1er appel charge le modèle E5 | Attendre ~30-60s au 1er appel (puis instantané) |
 | Vidéos en `"source": "fallback"` | `YOUTUBE_API_KEY` absente | Ajouter la clé dans `.env` |
 | `Temporary failure in name resolution` | DNS Docker instable | `docker compose restart backend` |
 
@@ -176,10 +175,6 @@ Projet13/
 | 4. YouTube API | ✅ |
 | 5. Frontend Angular | ✅ |
 | 6. Packaging | ✅ |
-| 7. Étude de faisabilité vidéo | ⬜ |
+| 7. Étude de faisabilité vidéo | ✅ |
 
 ---
-
-## 📄 Licence
-
-Projet pédagogique — OpenClassrooms / FFE.
